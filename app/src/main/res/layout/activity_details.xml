@@ -21,7 +21,7 @@
 
             <EditText
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:id="@+id/edit_product_name"
                 android:hint="@string/hint_product_name"
                 android:inputType="textCapWords"/>
@@ -39,7 +39,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/edit_price"
             android:hint="@string/hint_product_price"
             android:inputType="textCapWords"/>
@@ -57,7 +57,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/edit_quantity"
             android:hint="@string/hint_product_quantity"
             android:inputType="textCapWords"/>
@@ -75,7 +75,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/edit_supplier_name"
             android:hint="@string/hint_supplier_name"
             android:inputType="textCapWords"/>
@@ -93,7 +93,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/edit_supplier_mail"
             android:hint="@string/hint_supplier_mail"
             android:inputType="textCapWords"/>
@@ -111,7 +111,7 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/edit_supplier_phone"
             android:hint="@string/hint_supplier_phone"
             android:inputType="textCapWords"/>
@@ -124,13 +124,21 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabDetails"
+            android:id="@+id/fabDetailsOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_arrow_add"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabDetailsUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_done"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabDetailsDelete"
             android:layout_width="wrap_content"

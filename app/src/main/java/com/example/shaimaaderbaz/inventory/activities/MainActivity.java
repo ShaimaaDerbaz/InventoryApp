@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         final ListView listView = (ListView) findViewById(R.id.list_view);
         //View emptyView = findViewById(R.id.empty_view);
        // listView.setEmptyView(emptyView);
@@ -80,6 +82,40 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new ProductAdapter(this, cursor);
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+                i.putExtra("productId", id);
+                startActivity(i);
+
+            }
+        });
+
+        FloatingActionButton fabDeleteAllProd = (FloatingActionButton) findViewById(R.id.fabDeleteAll);
+        fabDeleteAllProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String [] projection=new String[]{
+                        ProductContract.ProductEntry._ID,
+                        ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
+                        ProductContract.ProductEntry.COLUMN_PRICE,
+                        ProductContract.ProductEntry.COLUMN_QUANTITY,
+                        ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
+                        ProductContract.ProductEntry.COLUMN_IMAGE};
+                int id=getContentResolver().delete(ProductContract.ProductEntry.BASE_CONTENT_URI,null,null);
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence dummyAdded = "all data is deleted !";
+                Toast toast =Toast.makeText(context,dummyAdded,duration);
+                toast.show();
+                Intent i = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(i);
+
+
+            }
+        });
 
     }
 }
