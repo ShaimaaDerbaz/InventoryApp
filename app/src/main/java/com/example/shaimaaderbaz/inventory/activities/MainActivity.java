@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         ProductContract.ProductEntry.COLUMN_QUANTITY,
                         ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
                         ProductContract.ProductEntry.COLUMN_IMAGE};
-                int id=getContentResolver().delete(ProductContract.ProductEntry.BASE_CONTENT_URI,null,null);
+                int id=getContentResolver().delete(ProductContract.ProductEntry.CONTENT_URI,null,null);
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence dummyAdded = "all data is deleted !";

@@ -110,7 +110,7 @@ public class DetailsActivity extends AppCompatActivity {
                     String smail=editSMail.getText().toString();
                     EditText editSPhone=(EditText)findViewById(R.id.edit_supplier_phone);
                     String sphone=editSPhone.getText().toString();
-                    Uri uri=ProductContract.ProductEntry.BASE_CONTENT_URI.withAppendedPath(ProductContract.ProductEntry.BASE_CONTENT_URI,"/"+currentItemId);
+                    Uri uri=ProductContract.ProductEntry.CONTENT_URI.withAppendedPath(ProductContract.ProductEntry.CONTENT_URI,"/"+currentItemId);
                     ContentValues values =new ContentValues();
                     values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,pname);
                     values.put(ProductContract.ProductEntry.COLUMN_PRICE,pprice);
@@ -118,7 +118,7 @@ public class DetailsActivity extends AppCompatActivity {
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,sname);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,smail);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE,sphone);
-                    getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentItemId)});
+                    int res=getContentResolver().update(uri,values,ProductContract.ProductEntry._ID+"=?",new String[] {String.valueOf(currentItemId)});
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
                     CharSequence recUpdated = "record updated successfully!";
