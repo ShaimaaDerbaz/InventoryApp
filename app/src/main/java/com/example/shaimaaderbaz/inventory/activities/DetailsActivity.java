@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-
+    int currentQuantityText =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +111,7 @@ public class DetailsActivity extends AppCompatActivity {
                     String smail=editSMail.getText().toString();
                     EditText editSPhone=(EditText)findViewById(R.id.edit_supplier_phone);
                     String sphone=editSPhone.getText().toString();
-                    Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
+                    Uri uriUpd = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
                     ContentValues values =new ContentValues();
                     values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,pname);
                     values.put(ProductContract.ProductEntry.COLUMN_PRICE,pprice);
@@ -118,7 +119,7 @@ public class DetailsActivity extends AppCompatActivity {
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,sname);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,smail);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE,sphone);
-                    int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentItemId)});
+                    int res=getContentResolver().update(uriUpd,values,"_ID=?",new String[] {String.valueOf(currentItemId)});
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
                     CharSequence recUpdated = "record updated successfully!";
@@ -151,8 +152,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         } else
         {
-           // setTitle(getString(R.string.editor_activity_title_edit_item));
-           // addValuesToEditItem(currentItemId);
+
         }
 
         final EditText productNameEdit=(EditText)findViewById(R.id.edit_product_name);
@@ -185,6 +185,33 @@ public class DetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        Button increaseButton = (Button) findViewById(R.id.increase_button);
+        increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editQuantity=(EditText)findViewById(R.id.edit_quantity);
+                currentQuantityText=Integer.parseInt(editQuantity.getText().toString());
+                currentQuantityText++;
+                editQuantity.setText(currentQuantityText+"");
+            }
+        });
+
+        Button decreaseButton = (Button) findViewById(R.id.decrease_button);
+        decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editQuantity=(EditText)findViewById(R.id.edit_quantity);
+                currentQuantityText=Integer.parseInt(editQuantity.getText().toString());
+                currentQuantityText--;
+                if(currentQuantityText<0)
+                    currentQuantityText=0;
+                editQuantity.setText(currentQuantityText+"");
+
+            }
+        });
+
+
 
     }
 }

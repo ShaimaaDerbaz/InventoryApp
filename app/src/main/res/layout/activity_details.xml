@@ -54,13 +54,28 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/product_quantity"/>
+         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+             <Button
+                 android:id="@+id/decrease_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="-"/>
 
-        <EditText
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/edit_quantity"
-            android:hint="@string/hint_product_quantity"
-            android:inputType="textCapWords"/>
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/edit_quantity"
+                android:hint="@string/hint_product_quantity"
+                android:inputType="textCapWords"/>
+             <Button
+                 android:id="@+id/increase_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="+"/>
+</LinearLayout>
+
 
     </LinearLayout>
     <LinearLayout

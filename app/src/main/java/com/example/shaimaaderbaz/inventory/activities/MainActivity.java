@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,12 +38,43 @@ public class MainActivity extends AppCompatActivity {
 
         Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
+    public void clickOnViewItem(long id) {
+        Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+        i.putExtra("productId", id);
+        startActivity(i);
+    }
+
+    public void clickOnSale(long id, int quantity) {
+        String []projection=new String[]{ProductContract.ProductEntry.COLUMN_QUANTITY};
+        Cursor cursor=getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI,projection,"_ID =?",new String[] {String.valueOf(id)},null);
+        String quantityP="";
+        if(cursor.moveToFirst())
+        {
+            quantityP=cursor.getString(1);
+        }
+        int pquantity=Integer.parseInt(quantityP);
+        Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + id);
+        ContentValues values =new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_QUANTITY,pquantity);
+        // int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentId)});
+        cursor.close();
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence recUpdated = "record updated successfully!";
+        Toast toast =Toast.makeText(context,recUpdated,duration);
+        toast.show();
+        Intent i = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(i);
+        // dbHelper.sellOneItem(id, quantity);
+        // adapter.swapCursor(dbHelper.readStock());
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         final ListView listView = (ListView) findViewById(R.id.list_view);
-        //View emptyView = findViewById(R.id.empty_view);
-       // listView.setEmptyView(emptyView);
        String [] projection=new String[]{
                 ProductContract.ProductEntry._ID,
                 ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
@@ -80,12 +110,35 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, null, null,null);
 
-        mAdapter = new ProductAdapter(this, cursor);
+        mAdapter = new ProductAdapter(MainActivity.this, cursor);
         listView.setAdapter(mAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final long  currentId=id;
+             /*   FloatingActionButton fabSale = (FloatingActionButton) findViewById(R.id.fabSale);
+                fabSale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                String[] projection = new String[]{ProductContract.ProductEntry.COLUMN_QUANTITY};
+                Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, "_ID =?", new String[]{String.valueOf(currentId)}, null);
+                String quantityP = "";
+                if (cursor.moveToFirst()) {
+                    quantityP = cursor.getString(1);
+                }
+                int pquantity = Integer.parseInt(quantityP);
+                Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentId);
+                ContentValues values = new ContentValues();
+                values.put(ProductContract.ProductEntry.COLUMN_QUANTITY, pquantity);
+                // int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentId)});
+                cursor.close();
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence recUpdated = "record updated successfully!";
+                Toast toast = Toast.makeText(context, recUpdated, duration);
+                toast.show();
+                Intent i = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(i);
+            }});*/
                 Intent i = new Intent(MainActivity.this, DetailsActivity.class);
                 i.putExtra("productId", id);
                 startActivity(i);
@@ -117,5 +170,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
 }
