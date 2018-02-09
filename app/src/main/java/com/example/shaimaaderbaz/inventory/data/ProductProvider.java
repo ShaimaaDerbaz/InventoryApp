@@ -105,7 +105,7 @@ public class ProductProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri,id);
     }
 
-    private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
         if (values.containsKey(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME)) {
             String name = values.getAsString(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
@@ -171,7 +171,7 @@ public class ProductProvider extends ContentProvider {
         switch (match) {
             case 100:
                 return updateProduct(uri, contentValues, selection, selectionArgs);
-            case 10:
+            case 101:
                 selection = ProductContract.ProductEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 return updateProduct(uri, contentValues, selection, selectionArgs);
