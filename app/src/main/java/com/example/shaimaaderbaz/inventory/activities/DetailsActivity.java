@@ -2,10 +2,12 @@ package com.example.shaimaaderbaz.inventory.activities;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        final Context mContext =getApplicationContext();
         final long currentItemId = getIntent().getLongExtra("productId", 0);
 
         if (currentItemId != 0)
@@ -123,6 +126,7 @@ public class DetailsActivity extends AppCompatActivity {
             fabDeleteProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
                     int id = getContentResolver().delete(uri, "_ID=?", new String[]{String.valueOf(currentItemId)});
                     Context context = getApplicationContext();
@@ -150,11 +154,7 @@ public class DetailsActivity extends AppCompatActivity {
                     Intent mailer = Intent.createChooser(i, null);
                     startActivity(mailer);
 
-
-
                 }});
-
-
 
         } else
         {
