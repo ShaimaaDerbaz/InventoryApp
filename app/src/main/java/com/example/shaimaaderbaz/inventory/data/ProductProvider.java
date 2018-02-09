@@ -163,7 +163,6 @@ public class ProductProvider extends ContentProvider {
 
     }
 
-
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection,
                       String[] selectionArgs) {

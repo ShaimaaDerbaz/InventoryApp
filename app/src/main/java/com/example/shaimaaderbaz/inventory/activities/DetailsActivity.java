@@ -80,7 +80,6 @@ public class DetailsActivity extends AppCompatActivity {
                 EditText editSPhone=(EditText)findViewById(R.id.edit_supplier_phone);
                 editSPhone.setText(sPhone);
 
-
             }
             FloatingActionButton fabUpdate = (FloatingActionButton) findViewById(R.id.fabDetailsUpdate);
             fabUpdate.setOnClickListener(new View.OnClickListener() {
@@ -202,12 +201,6 @@ public class DetailsActivity extends AppCompatActivity {
                     Toast toast =Toast.makeText(context,recNull,duration);
                     toast.show();
                 }
-
-
-
-
-
-
             }
         });
 

@@ -3,7 +3,6 @@ package com.example.shaimaaderbaz.inventory.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +35,6 @@ public class ProductAdapter extends CursorAdapter {
         final TextView nameTextView = (TextView) view.findViewById(R.id.productNameDisplay);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantityDisplay);
         TextView priceTextView = (TextView) view.findViewById(R.id.priceDisplay);
-        //ImageView sale = (ImageView) view.findViewById(R.id.sale);
-
 
         String productName = cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME));
         final int quantity = cursor.getInt(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_QUANTITY));
@@ -49,23 +46,6 @@ public class ProductAdapter extends CursorAdapter {
         priceTextView.setText(price);
 
         final long id = cursor.getLong(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
-
-
-
-       /* view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.clickOnViewItem(id);
-            }
-        });
-        FloatingActionButton fabSale = (FloatingActionButton) view.findViewById(R.id.fabSale);
-        fabSale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.clickOnSale(id, quantity);
-            }
-        });*/
-
 
     }
 }

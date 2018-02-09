@@ -39,37 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
-    public void clickOnViewItem(long id) {
-        Intent i = new Intent(MainActivity.this, DetailsActivity.class);
-        i.putExtra("productId", id);
-        startActivity(i);
-    }
-
-    public void clickOnSale(long id, int quantity) {
-        String []projection=new String[]{ProductContract.ProductEntry.COLUMN_QUANTITY};
-        Cursor cursor=getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI,projection,"_ID =?",new String[] {String.valueOf(id)},null);
-        String quantityP="";
-        if(cursor.moveToFirst())
-        {
-            quantityP=cursor.getString(1);
-        }
-        int pquantity=Integer.parseInt(quantityP);
-        Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + id);
-        ContentValues values =new ContentValues();
-        values.put(ProductContract.ProductEntry.COLUMN_QUANTITY,pquantity);
-        // int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentId)});
-        cursor.close();
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        CharSequence recUpdated = "record updated successfully!";
-        Toast toast =Toast.makeText(context,recUpdated,duration);
-        toast.show();
-        Intent i = new Intent(MainActivity.this, MainActivity.class);
-        startActivity(i);
-        // dbHelper.sellOneItem(id, quantity);
-        // adapter.swapCursor(dbHelper.readStock());
-    }
-
 
 
     @Override
@@ -121,32 +90,7 @@ public class MainActivity extends AppCompatActivity {
        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final long  currentId=id;
-             /*   FloatingActionButton fabSale = (FloatingActionButton) findViewById(R.id.fabSale);
-                fabSale.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                String[] projection = new String[]{ProductContract.ProductEntry.COLUMN_QUANTITY};
-                Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, "_ID =?", new String[]{String.valueOf(currentId)}, null);
-                String quantityP = "";
-                if (cursor.moveToFirst()) {
-                    quantityP = cursor.getString(1);
-                }
-                int pquantity = Integer.parseInt(quantityP);
-                Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentId);
-                ContentValues values = new ContentValues();
-                values.put(ProductContract.ProductEntry.COLUMN_QUANTITY, pquantity);
-                // int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentId)});
-                cursor.close();
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                CharSequence recUpdated = "record updated successfully!";
-                Toast toast = Toast.makeText(context, recUpdated, duration);
-                toast.show();
-                Intent i = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(i);
-            }});*/
-                Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+                               Intent i = new Intent(MainActivity.this, DetailsActivity.class);
                 i.putExtra("productId", id);
                 startActivity(i);
 

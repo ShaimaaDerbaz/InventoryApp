@@ -11,15 +11,7 @@
     android:layout_width="0dp">
 
 </LinearLayout>
-   <!-- <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabSale"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_sale"/>-->
-
+  
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

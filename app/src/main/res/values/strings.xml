@@ -21,4 +21,5 @@
     <string name="hint_supplier_phone">supplier phone</string>
     <string name="editor_insert_pet_successful">Pet saved</string>
     <string name="editor_insert_pet_failed">Error with saving pet</string>
+    <string name="default_message">please click left Button to add new product or center Button to dummy product</string>
 </resources>
