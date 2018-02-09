@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shaimaaderbaz.inventory.R;
@@ -109,9 +110,15 @@ public class MainActivity extends AppCompatActivity {
                 ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME};
 
         Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, null, null,null);
-
-        mAdapter = new ProductAdapter(MainActivity.this, cursor);
-        listView.setAdapter(mAdapter);
+       if(cursor.getCount()!=0) {
+           mAdapter = new ProductAdapter(MainActivity.this, cursor);
+           listView.setAdapter(mAdapter);
+       }
+        else
+       {
+           TextView textVisable=(TextView)findViewById(R.id.text_visiable);
+           textVisable.setVisibility(View.VISIBLE);
+       }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final long  currentId=id;

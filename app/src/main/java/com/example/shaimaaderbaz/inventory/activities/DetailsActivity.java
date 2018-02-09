@@ -148,6 +148,24 @@ public class DetailsActivity extends AppCompatActivity {
 
                 }});
 
+            FloatingActionButton fabContaSupplier = (FloatingActionButton) findViewById(R.id.fabContatctSupplier);
+            fabContaSupplier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EditText mailEdit=(EditText)findViewById(R.id.edit_supplier_mail);
+                    String mail=mailEdit.getText().toString();
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_EMAIL, mail);
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Order Products");
+                    i.putExtra(Intent.EXTRA_TEXT, "Kindly be noted that , I want 5000 items ");
+                    Intent mailer = Intent.createChooser(i, null);
+                    startActivity(mailer);
+
+
+
+                }});
+
 
 
         } else

@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.shaimaaderbaz.inventory.activities.MainActivity">
-
+     <TextView
+         android:id="@+id/text_visiable"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:visibility="gone"
+         android:text="please click left Button to add new product or center Button to dummy product"/>
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
