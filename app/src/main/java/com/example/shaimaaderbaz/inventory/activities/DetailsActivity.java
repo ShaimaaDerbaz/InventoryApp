@@ -110,7 +110,7 @@ public class DetailsActivity extends AppCompatActivity {
                     String smail=editSMail.getText().toString();
                     EditText editSPhone=(EditText)findViewById(R.id.edit_supplier_phone);
                     String sphone=editSPhone.getText().toString();
-                    Uri uri=ProductContract.ProductEntry.CONTENT_URI.withAppendedPath(ProductContract.ProductEntry.CONTENT_URI,"/"+currentItemId);
+                    Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
                     ContentValues values =new ContentValues();
                     values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,pname);
                     values.put(ProductContract.ProductEntry.COLUMN_PRICE,pprice);
@@ -118,7 +118,7 @@ public class DetailsActivity extends AppCompatActivity {
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,sname);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,smail);
                     values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE,sphone);
-                    int res=getContentResolver().update(uri,values,ProductContract.ProductEntry._ID+"=?",new String[] {String.valueOf(currentItemId)});
+                    int res=getContentResolver().update(uri,values,"_ID=?",new String[] {String.valueOf(currentItemId)});
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
                     CharSequence recUpdated = "record updated successfully!";
@@ -130,6 +130,23 @@ public class DetailsActivity extends AppCompatActivity {
 
                 }
             });
+            FloatingActionButton fabDeleteProduct = (FloatingActionButton) findViewById(R.id.fabDetailsDelete);
+            fabDeleteProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
+                    int id = getContentResolver().delete(uri, "_ID=?", new String[]{String.valueOf(currentItemId)});
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    CharSequence dummyDeleted = "record deleted !";
+                    Toast toast = Toast.makeText(context, dummyDeleted, duration);
+                    toast.show();
+                    Intent i = new Intent(DetailsActivity.this, MainActivity.class);
+                    startActivity(i);
+
+
+                }});
+
 
 
         } else
