@@ -17,6 +17,8 @@ import com.example.shaimaaderbaz.inventory.R;
 import com.example.shaimaaderbaz.inventory.data.ProductContract;
 
 public class DetailsActivity extends AppCompatActivity {
+    int currentQuantityText =0;
+
     public void insertProduct(String productName ,int price , int quantity,String supplierName,String supplierMail,String supplierPhone ) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,productName);
@@ -30,20 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
         Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
 
-    public  void displayData(String [] projection)
-    {
-           projection=new String[]{
-                ProductContract.ProductEntry._ID,
-                ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
-                ProductContract.ProductEntry.COLUMN_PRICE,
-                ProductContract.ProductEntry.COLUMN_QUANTITY,
-                ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME};
-        Uri uri;
-        Cursor cursor=getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI,projection,null,null,null);
 
-    }
-
-    int currentQuantityText =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +145,7 @@ public class DetailsActivity extends AppCompatActivity {
                     String mail=mailEdit.getText().toString();
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_EMAIL, mail);
+                    i.putExtra(Intent.EXTRA_EMAIL, new String[]{mail});
                     i.putExtra(Intent.EXTRA_SUBJECT, "Order Products");
                     i.putExtra(Intent.EXTRA_TEXT, "Kindly be noted that , I want 5000 items ");
                     Intent mailer = Intent.createChooser(i, null);
@@ -182,23 +171,41 @@ public class DetailsActivity extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabDetailsOk);
         fabAdd.setOnClickListener(new View.OnClickListener() {
 
-
-            @Override
+           @Override
             public void onClick(View view) {
-                final String productName =productNameEdit.getText().toString();
-                final int productPrice =Integer.parseInt(productPriceEdit.getText().toString());
-                final int productQuantity =Integer.parseInt(productQuantityEdit.getText().toString());
-                final String supplierName =supplierNameEdit.getText().toString();
-                final String supplierMail =supplierMailEdit.getText().toString();
-                final String supplierPhone =supplierPhoneEdit.getText().toString();
-                insertProduct(productName,productPrice,productQuantity,supplierName,supplierMail,supplierPhone);
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                CharSequence recAdded = "record added successfully!";
-                Toast toast =Toast.makeText(context,recAdded,duration);
-                toast.show();
-                Intent i = new Intent(DetailsActivity.this, MainActivity.class);
-                startActivity(i);
+               final String productName;
+               final int productPrice ;
+               final int productQuantity ;
+               final String supplierName;
+               final String supplierMail;
+               final String supplierPhone ;
+                try {
+                     productName = productNameEdit.getText().toString();
+                     productPrice = Integer.parseInt(productPriceEdit.getText().toString());
+                     productQuantity = Integer.parseInt(productQuantityEdit.getText().toString());
+                     supplierName = supplierNameEdit.getText().toString();
+                     supplierMail = supplierMailEdit.getText().toString();
+                     supplierPhone = supplierPhoneEdit.getText().toString();
+                    insertProduct(productName,productPrice,productQuantity,supplierName,supplierMail,supplierPhone);
+                    Context contextAdd = getApplicationContext();
+                    int durationAdd = Toast.LENGTH_SHORT;
+                    CharSequence recAdded = "record added successfully!";
+                    Toast toastAdd =Toast.makeText(contextAdd,recAdded,durationAdd);
+                    toastAdd.show();
+                    Intent i = new Intent(DetailsActivity.this, MainActivity.class);
+                    startActivity(i);
+                }catch (Exception e)
+                {
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    CharSequence recNull = "please fill all feilds";
+                    Toast toast =Toast.makeText(context,recNull,duration);
+                    toast.show();
+                }
+
+
+
+
 
 
             }
