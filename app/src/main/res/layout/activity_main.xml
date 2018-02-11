@@ -9,7 +9,10 @@
          android:id="@+id/text_visiable"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:gravity="center"
          android:visibility="gone"
+         android:layout_marginTop="@dimen/fab_margin"
+         android:textSize="@dimen/deseul_text_size"
          android:text="@string/default_message"/>
     <ListView
         android:id="@+id/list_view"

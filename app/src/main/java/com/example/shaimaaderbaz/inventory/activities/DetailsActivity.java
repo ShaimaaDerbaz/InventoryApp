@@ -122,10 +122,22 @@ public class DetailsActivity extends AppCompatActivity {
 
                 }
             });
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Deete item");
+            builder.setMessage("Are you sure?");
+
             FloatingActionButton fabDeleteProduct = (FloatingActionButton) findViewById(R.id.fabDetailsDelete);
             fabDeleteProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }});
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
 
                     Uri uri = Uri.parse("content://" + "com.example.shaimaaderbaz.inventory" + "/products/" + currentItemId);
                     int id = getContentResolver().delete(uri, "_ID=?", new String[]{String.valueOf(currentItemId)});
@@ -136,9 +148,19 @@ public class DetailsActivity extends AppCompatActivity {
                     toast.show();
                     Intent i = new Intent(DetailsActivity.this, MainActivity.class);
                     startActivity(i);
+                }
+            });
 
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
-                }});
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
 
             FloatingActionButton fabContaSupplier = (FloatingActionButton) findViewById(R.id.fabContatctSupplier);
             fabContaSupplier.setOnClickListener(new View.OnClickListener() {
