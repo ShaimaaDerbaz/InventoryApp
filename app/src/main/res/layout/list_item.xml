@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:paddingLeft="16dp"
+            android:paddingLeft="@dimen/p_name_padding"
             android:text=""
-            android:textSize="24sp" />
+            android:textSize="@dimen/p_name_text_size" />
         <ImageView
             android:id="@+id/itemImageDisplay"
             android:layout_width="match_parent"
@@ -57,9 +57,9 @@
                 android:paddingLeft="16dp"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="16sp"
+                android:textSize="@dimen/p_text_size"
                 android:gravity="bottom"
-                tools:text="100yen" />
+                />
 
             <TextView
                 android:id="@+id/quantityDisplay"
@@ -69,8 +69,8 @@
                 android:gravity="end|center_vertical"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="26sp"
-                tools:text="100yen" />
+                android:textSize="@dimen/q_text_size"
+                 />
 
         </LinearLayout>
 

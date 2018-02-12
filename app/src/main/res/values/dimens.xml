@@ -5,4 +5,8 @@
     <dimen name="fab_margin">14dp</dimen>
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="deseul_text_size">36sp</dimen>
+    <dimen name="q_text_size">26sp</dimen>
+    <dimen name="p_text_size">16sp</dimen>
+    <dimen name="p_name_text_size">24sp</dimen>
+    <dimen name="p_name_padding">16dp</dimen>
 </resources>
