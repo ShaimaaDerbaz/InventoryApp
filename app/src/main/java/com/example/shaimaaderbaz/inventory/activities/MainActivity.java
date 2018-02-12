@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,"Test Supplier");
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,"test@gmail.com");
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE, "012345678");
-
+        values.put(ProductContract.ProductEntry.COLUMN_IMAGE,Uri.parse("https://www.libertyreits.com/wp-content/uploads/2017/02/shopping-cart.png").toString());
 
         Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
     }
@@ -73,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
                 ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductContract.ProductEntry.COLUMN_PRICE,
                 ProductContract.ProductEntry.COLUMN_QUANTITY,
-                ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME};
+                ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
+                ProductContract.ProductEntry.COLUMN_IMAGE
+       };
 
         Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, null, null,null);
        if(cursor.getCount()!=0) {
@@ -96,9 +98,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
             public void onClick(View view) {
                AlertDialog alert = builder.create();
                alert.show();
-
-
-
             }
         });
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -125,8 +124,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
                 dialog.dismiss();
             }
         });
-
-
 
     }
 

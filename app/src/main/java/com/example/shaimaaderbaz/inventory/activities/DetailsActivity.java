@@ -1,5 +1,6 @@
 package com.example.shaimaaderbaz.inventory.activities;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,11 +18,17 @@ import android.widget.Toast;
 
 import com.example.shaimaaderbaz.inventory.R;
 import com.example.shaimaaderbaz.inventory.data.ProductContract;
+import com.example.shaimaaderbaz.inventory.utlis.UtilisUI;
+
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class DetailsActivity extends AppCompatActivity {
     int currentQuantityText =0;
-
-    public void insertProduct(String productName ,int price , int quantity,String supplierName,String supplierMail,String supplierPhone ) {
+    int PICK_PHOTO_FOR_AVATAR =1;
+    Uri actualUri;
+    public void insertProduct(String productName ,int price , int quantity,String supplierName,String supplierMail,String supplierPhone,String imageUri ) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,productName);
         values.put(ProductContract.ProductEntry.COLUMN_PRICE,price);
@@ -29,9 +36,46 @@ public class DetailsActivity extends AppCompatActivity {
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,supplierName);
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,supplierMail);
         values.put(ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE, supplierPhone);
-
+        values.put(ProductContract.ProductEntry.COLUMN_IMAGE,imageUri);
 
         Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
+    }
+
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                actualUri = data.getData();
+                //Display an error
+                return;
+            }
+
+           /* try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                BufferedInputStream bis = new BufferedInputStream(inputStream,128);
+                ByteArrayBuffer barb= new ByteArrayBuffer(128);
+
+                int current = 0;
+                while ((current = bis.read()) != -1) {
+                    barb.append((byte) current);
+                }
+                String input =UtilisUI.readFromStream(inputStream);
+                UtilisUI.decodeBase64(input);
+            }catch(FileNotFoundException e)
+            {
+
+            }
+            catch (Exception e)
+            {}*/
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        }
     }
 
 
@@ -189,6 +233,13 @@ public class DetailsActivity extends AppCompatActivity {
         final EditText supplierNameEdit=(EditText)findViewById(R.id.edit_supplier_name);
         final EditText supplierMailEdit=(EditText)findViewById(R.id.edit_supplier_mail);
         final EditText supplierPhoneEdit=(EditText)findViewById(R.id.edit_supplier_phone);
+        Button SelectImageButton =(Button)findViewById(R.id.select_image_button);
+        SelectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImage();
+            }
+        });
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabDetailsOk);
         fabAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -207,9 +258,10 @@ public class DetailsActivity extends AppCompatActivity {
                      supplierName = supplierNameEdit.getText().toString();
                      supplierMail = supplierMailEdit.getText().toString();
                      supplierPhone = supplierPhoneEdit.getText().toString();
-                    insertProduct(productName,productPrice,productQuantity,supplierName,supplierMail,supplierPhone);
-                    Context contextAdd = getApplicationContext();
-                    int durationAdd = Toast.LENGTH_SHORT;
+                     String uriT=actualUri.toString();
+                     insertProduct(productName,productPrice,productQuantity,supplierName,supplierMail,supplierPhone,actualUri.toString());
+                     Context contextAdd = getApplicationContext();
+                     int durationAdd = Toast.LENGTH_SHORT;
                     CharSequence recAdded = "record added successfully!";
                     Toast toastAdd =Toast.makeText(contextAdd,recAdded,durationAdd);
                     toastAdd.show();
@@ -219,7 +271,7 @@ public class DetailsActivity extends AppCompatActivity {
                 {
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
-                    CharSequence recNull = "please fill all feilds";
+                    CharSequence recNull = "please fill all feilds and correct";
                     Toast toast =Toast.makeText(context,recNull,duration);
                     toast.show();
                 }
@@ -250,6 +302,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             }
         });
+
 
 
 

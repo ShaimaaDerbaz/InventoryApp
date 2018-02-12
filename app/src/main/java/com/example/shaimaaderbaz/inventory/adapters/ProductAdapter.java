@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
@@ -49,13 +51,15 @@ public class ProductAdapter extends CursorAdapter {
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantityDisplay);
         TextView priceTextView = (TextView) view.findViewById(R.id.priceDisplay);
         LinearLayout productDetails = (LinearLayout) view.findViewById(R.id.product_details_layout);
-        ImageView saleButton = (ImageView) view.findViewById(R.id.fabSale);
+        FloatingActionButton saleButton = (FloatingActionButton) view.findViewById(R.id.fabSale);
+        ImageView productImage = (ImageView) view.findViewById(R.id.itemImageDisplay);
 
         String productName = cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME));
         final int quantity = cursor.getInt(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_QUANTITY));
         String price = cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE));
-        final long id = cursor.getLong(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
+        Uri imageUri=Uri.parse(cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_IMAGE)));
 
+        final long id = cursor.getLong(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
         productDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +80,8 @@ public class ProductAdapter extends CursorAdapter {
         nameTextView.setText(productName);
         quantityTextView.setText(String.valueOf(quantity));
         priceTextView.setText(price);
+        productImage.setImageURI(imageUri);
 
-       // final long id = cursor.getLong(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
 
     }
 }

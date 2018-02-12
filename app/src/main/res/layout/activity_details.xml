@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_margin"
-    tools:context="com.example.shaimaaderbaz.inventory.activities.DetailsActivity">
+    tools:context="com.example.shaimaaderbaz.inventory.activities.DetailsActivity"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -156,8 +157,9 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.55">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabDetailsOk"

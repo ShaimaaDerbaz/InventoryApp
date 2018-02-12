@@ -19,7 +19,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT NOT NULL,"+
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL + " TEXT NOT NULL,"+
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE + " TEXT NOT NULL,"+
-                    ProductContract.ProductEntry.COLUMN_IMAGE + " BLOB);";
+                    ProductContract.ProductEntry.COLUMN_IMAGE + " TEXT NOT NULL);";
 
 
     private static final String SQL_DELETE_ENTRIES =
