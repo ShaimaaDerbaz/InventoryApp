@@ -18,11 +18,11 @@ import android.widget.Toast;
 import com.example.shaimaaderbaz.inventory.R;
 import com.example.shaimaaderbaz.inventory.adapters.ProductAdapter;
 import com.example.shaimaaderbaz.inventory.data.ProductContract;
-import com.example.shaimaaderbaz.inventory.data.ProductDbHelper;
+
 
 public class MainActivity extends AppCompatActivity implements ProductAdapter.ProductAdapterListener {
-    ProductDbHelper dbHelper;
     ProductAdapter mAdapter;
+     ListView listView;
       public void insertDummy( ) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,"Test product");
@@ -57,17 +57,34 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
             public void onClick(View view) {
                 insertDummy();
                 Context context = getApplicationContext();
+                String [] projection=new String[]{
+                        ProductContract.ProductEntry._ID,
+                        ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
+                        ProductContract.ProductEntry.COLUMN_PRICE,
+                        ProductContract.ProductEntry.COLUMN_QUANTITY,
+                        ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
+                        ProductContract.ProductEntry.COLUMN_IMAGE
+                };
+
+                Cursor cursor = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projection, null, null,null);
+                listView = (ListView) findViewById(R.id.list_view);
+                mAdapter = new ProductAdapter(MainActivity.this, cursor);
+                listView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
                 int duration = Toast.LENGTH_SHORT;
+                TextView textVisable=(TextView)findViewById(R.id.text_visiable);
+                textVisable.setVisibility(View.INVISIBLE);
                 CharSequence dummyAdded = "dummy product data is added !";
                 Toast toast =Toast.makeText(context,dummyAdded,duration);
                 toast.show();
+
 
 
             }
         });
 
 
-       final ListView listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.list_view);
        String [] projection=new String[]{
                 ProductContract.ProductEntry._ID,
                 ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
@@ -81,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
        if(cursor.getCount()!=0) {
            mAdapter = new ProductAdapter(MainActivity.this, cursor);
            listView.setAdapter(mAdapter);
+           mAdapter.notifyDataSetChanged();
        }
         else
        {
@@ -143,6 +161,21 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.Pr
         if (pquantity > 0) {
             values.put(ProductContract.ProductEntry.COLUMN_QUANTITY, pquantity - 1);
             int res = getContentResolver().update(uriUpd, values, "_ID=?", new String[]{String.valueOf(id)});
+            String [] projectionAd=new String[]{
+                    ProductContract.ProductEntry._ID,
+                    ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
+                    ProductContract.ProductEntry.COLUMN_PRICE,
+                    ProductContract.ProductEntry.COLUMN_QUANTITY,
+                    ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
+                    ProductContract.ProductEntry.COLUMN_IMAGE
+            };
+
+            Cursor cursorA = getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI, projectionAd, null, null,null);
+            listView = (ListView) findViewById(R.id.list_view);
+            mAdapter = new ProductAdapter(MainActivity.this, cursorA);
+            listView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+
             Toast.makeText(this, "Recorded Updated , one item saled", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "your items is zero , no items to sale", Toast.LENGTH_LONG).show();

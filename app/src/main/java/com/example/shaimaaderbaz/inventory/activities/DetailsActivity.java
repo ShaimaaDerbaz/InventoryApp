@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shaimaaderbaz.inventory.R;
@@ -57,24 +58,6 @@ public class DetailsActivity extends AppCompatActivity {
                 return;
             }
 
-           /* try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                BufferedInputStream bis = new BufferedInputStream(inputStream,128);
-                ByteArrayBuffer barb= new ByteArrayBuffer(128);
-
-                int current = 0;
-                while ((current = bis.read()) != -1) {
-                    barb.append((byte) current);
-                }
-                String input =UtilisUI.readFromStream(inputStream);
-                UtilisUI.decodeBase64(input);
-            }catch(FileNotFoundException e)
-            {
-
-            }
-            catch (Exception e)
-            {}*/
-            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
         }
     }
 
@@ -98,6 +81,7 @@ public class DetailsActivity extends AppCompatActivity {
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_EMAIL,
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_PHONE,
+                    ProductContract.ProductEntry.COLUMN_IMAGE
             };
             String pName="";
             String price="";
@@ -105,6 +89,7 @@ public class DetailsActivity extends AppCompatActivity {
             String sName="";
             String sMail="";
             String sPhone="";
+            String sImage="";
             Cursor cursor=getContentResolver().query(ProductContract.ProductEntry.CONTENT_URI,projection,"_ID =?",new String[] {String.valueOf(currentItemId)},null);
             if(cursor.moveToFirst())
             {
@@ -114,6 +99,7 @@ public class DetailsActivity extends AppCompatActivity {
                 sName=cursor.getString(4);
                 sMail=cursor.getString(5);
                 sPhone=cursor.getString(6);
+                sImage=cursor.getString(7);
                 EditText editPName=(EditText)findViewById(R.id.edit_product_name);
                 editPName.setText(pName);
                 EditText editPrice=(EditText)findViewById(R.id.edit_price);
@@ -126,6 +112,8 @@ public class DetailsActivity extends AppCompatActivity {
                 editSMail.setText(sMail);
                 EditText editSPhone=(EditText)findViewById(R.id.edit_supplier_phone);
                 editSPhone.setText(sPhone);
+                ImageView imageProduct=(ImageView) findViewById(R.id.image_product);
+                imageProduct.setImageURI(Uri.parse(sImage));
 
             }
             FloatingActionButton fabUpdate = (FloatingActionButton) findViewById(R.id.fabDetailsUpdate);
@@ -283,9 +271,14 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText editQuantity=(EditText)findViewById(R.id.edit_quantity);
-                currentQuantityText=Integer.parseInt(editQuantity.getText().toString());
-                currentQuantityText++;
-                editQuantity.setText(currentQuantityText+"");
+                try {
+                    currentQuantityText = Integer.parseInt(editQuantity.getText().toString());
+                    currentQuantityText++;
+                    editQuantity.setText(currentQuantityText + "");
+                }catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), "fill quntity feild to can increase", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -294,11 +287,16 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText editQuantity=(EditText)findViewById(R.id.edit_quantity);
-                currentQuantityText=Integer.parseInt(editQuantity.getText().toString());
-                currentQuantityText--;
-                if(currentQuantityText<0)
-                    currentQuantityText=0;
-                editQuantity.setText(currentQuantityText+"");
+                try {
+                    currentQuantityText = Integer.parseInt(editQuantity.getText().toString());
+                    currentQuantityText--;
+                    if (currentQuantityText < 0)
+                        currentQuantityText = 0;
+                    editQuantity.setText(currentQuantityText + "");
+                }catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), "fill quntity feild to can decrease", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
